@@ -1,30 +1,33 @@
-const array = [['Nome', 'Nota', 'Avaliações', 'Preço']]
+const array = [['Nome', 'Nota', 'Avaliações']]
 
-const propertyCards = document.querySelectorAll("._5d6c618c8");
+const propertyCards = document.querySelectorAll(".listing");
 
 propertyCards.forEach( property => {
 
-  const msg = '-';
-  let nome = property.querySelector("._c445487e2");
-  nome = checkForNull(nome, msg);
+  const msg = '-'
 
-  let avaliacao = property.querySelector("._6e869d6e0");
+  let nome = property.querySelector(".listing_title");
+  nome = checkForNull(nome, msg).trim();
+
+  let avaliacao = property.querySelector(".review_count");
   avaliacao = checkForNull(avaliacao, msg);
   if (avaliacao != msg) {
-    avaliacao = avaliacao.slice(0, avaliacao.search("avali"));
+    avaliacao = avaliacao.slice(0, avaliacao.search("aval"));
   }
 
-  let nota = property.querySelector(".bd528f9ea6");
-  nota = checkForNull(nota, msg);
+  let nota = property.querySelector('.ui_bubble_rating');
+  try {
+      nota = nota.getAttribute('alt').slice(0, 3);
+      if (nota.includes("d")) {
+          nota = nota.slice(0,1);
+      }
 
-  let preco = property.querySelector("._e885fdc12");
-
-  preco = checkForNull(preco, msg);
-  if (preco != msg) {
-      preco = preco.slice(2);
+  } catch  (err) {
+      nota = "-";
   }
 
-  const subarray = [nome, nota, avaliacao, preco]
+
+  const subarray = [nome, nota, avaliacao]
   array.push(subarray)
 
 });
@@ -80,4 +83,4 @@ function exportToCsv(filename, rows) {
     }
 
 
-exportToCsv('export.csv', array)
+exportToCsv('export.csv', array);
