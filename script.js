@@ -1,37 +1,33 @@
-
-const array = [['Nome', 'Nota', 'Avaliação', 'Preço']]
+const array = [['Nome', 'Nota', 'Avaliações', 'Preço']]
 
 const propertyCards = document.querySelectorAll("._5d6c618c8");
 
 propertyCards.forEach( property => {
 
-  const msg = 'not set'
+  const msg = '-';
   let nome = property.querySelector("._c445487e2");
-  nome = checkForNull (nome, msg);
+  nome = checkForNull(nome, msg);
 
   let avaliacao = property.querySelector("._6e869d6e0");
-  avaliacao = checkForNull (avaliacao, msg);
+  avaliacao = checkForNull(avaliacao, msg);
+  if (avaliacao != msg) {
+    avaliacao = avaliacao.slice(0, avaliacao.search("avali"));
+  }
 
   let nota = property.querySelector(".bd528f9ea6");
-  nota = checkForNull (nota, msg);
+  nota = checkForNull(nota, msg);
 
   let preco = property.querySelector("._e885fdc12");
-  preco = checkForNull (preco, msg);
+
+  preco = checkForNull(preco, msg);
+  if (preco != msg) {
+      preco = preco.slice(2);
+  }
 
   const subarray = [nome, nota, avaliacao, preco]
   array.push(subarray)
 
-  // const info = {
-  //   name,
-  //   nota,
-  //   avaliacao,
-  //   preco,
-  // }
-  // array.push(info)
-
 });
-
-console.log(array);
 
 function checkForNull (param, msg) {
   if (param === null) {
